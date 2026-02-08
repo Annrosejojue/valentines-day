@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Valentine's Day ❤️</title>
+
+    <!-- Cute Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(-45deg, #ff758c, #ff7eb3, #fad0c4, #fcbad3);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #container {
+            color: white;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3rem;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        #yesBtn {
+            background: #ff4d6d;
+            color: white;
+        }
+
+        #noBtn {
+            background: #333;
+            color: white;
+            position: absolute;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .heart, .msg {
+            position: absolute;
+            color: white;
+            font-size: 20px;
+            animation: floatUp 6s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-800px); opacity: 0; }
+        }
+
+        footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+</audio>
+
+<div id="container">
+    <h1>What is your name? ❤️</h1>
+    <input id="nameInput" type="text" placeholder="Enter your name" style="padding:10px; border-radius:8px; border:none;">
+    <br><br>
+    <button onclick="start()">Continue</button>
+</div>
+
+<footer>© Ann Edakkalathur</footer>
+
+<script>
+    // Start music after click
+    function start() {
+        document.getElementById("bgMusic").play();
+        askLove();
+    }
+
+    // Floating hearts
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.fontSize = (20 + Math.random() * 30) + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+    }, 300);
+
+    // Floating funny messages
+    function floatMessage(text) {
+        const msg = document.createElement("div");
+        msg.classList.add("msg");
+        msg.innerHTML = text;
+        msg.style.left = Math.random() * window.innerWidth + "px";
+        msg.style.top = Math.random() * window.innerHeight + "px";
+        msg.style.fontSize = "22px";
+        msg.style.fontWeight = "700";
+        document.body.appendChild(msg);
+        setTimeout(() => msg.remove(), 4000);
+    }
+
+    // Ask name
+    function askLove() {
+        const name = document.getElementById("nameInput").value.trim();
+        if (!name) {
+            floatMessage("Please enter your name!");
+            return;
+        }
+
+        document.getElementById("container").innerHTML = `
+            <h1>Hi ${name} ❤️</h1>
+            <h2>Do you love me?</h2>
+            <button id="yesBtn" onclick="yesLove()">Yes</button>
+            <button id="noBtn">No</button>
+        `;
+
+        const noBtn = document.getElementById("noBtn");
+
+        // Make NO button run away BEFORE click
+        noBtn.addEventListener("mouseover", () => {
+            const maxX = window.innerWidth - noBtn.offsetWidth;
+            const maxY = window.innerHeight - noBtn.offsetHeight;
+
+            noBtn.style.left = Math.random() * maxX + "px";
+            noBtn.style.top = Math.random() * maxY + "px";
+
+            floatMessage("Catch me if you can 😜");
+        });
+    }
+
+    function yesLove() {
+        document.getElementById("container").innerHTML = `
+            <h1>❤️ I knew it! ❤️</h1>
+            <h2>Happy Valentine's Day! 💕</h2>
+        `;
+    }
+</script>
+
+</body>
+</html>
