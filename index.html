@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Valentine's Day ❤️</title>
 
-    <!-- Cute Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
         body {
             margin: 0;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(-45deg, #ff758c, #ff7eb3, #fad0c4, #fcbad3);
+            background: linear-gradient(-45deg, #ff758c, #ff7eb3, #fad0c4, #ffd1ff);
             background-size: 400% 400%;
-            animation: gradientBG 10s ease infinite;
+            animation: gradientBG 15s ease infinite;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -31,20 +32,27 @@
         #container {
             color: white;
             animation: fadeIn 1.5s ease-in-out;
+            padding: 0 20px;
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
             font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 400;
         }
 
         button {
-            padding: 12px 25px;
-            font-size: 18px;
+            padding: 14px 30px;
+            font-size: 20px;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
-            margin: 10px;
+            margin: 12px;
         }
 
         #yesBtn {
@@ -58,6 +66,15 @@
             position: absolute;
         }
 
+        input {
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            font-size: 18px;
+            width: 80%;
+            max-width: 300px;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -66,7 +83,6 @@
         .heart, .msg {
             position: absolute;
             color: white;
-            font-size: 20px;
             animation: floatUp 6s linear infinite;
             pointer-events: none;
         }
@@ -83,12 +99,40 @@
             text-align: center;
             color: white;
             font-size: 14px;
-            opacity: 0.8;
+            opacity: 0.9;
+        }
+
+        /* COUPLE EMOJI ANIMATION */
+        .couple {
+            position: absolute;
+            bottom: 70px;
+            font-size: 70px;
+            animation: slideCouple 5s ease-in-out infinite;
+        }
+
+        @keyframes slideCouple {
+            0% { transform: translateX(-150px); opacity: 1; }
+            40% { transform: translateX(40vw); opacity: 1; } /* Center */
+            60% { transform: translateX(40vw); opacity: 1; } /* Pause */
+            100% { transform: translateX(120vw); opacity: 0; } /* Exit right */
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.3rem; }
+            h2 { font-size: 1.3rem; }
+            button { font-size: 18px; padding: 14px 26px; }
+            input { font-size: 18px; width: 85%; }
+            .msg { font-size: 22px !important; }
+            .heart { font-size: 30px !important; }
+            .couple { font-size: 55px; bottom: 60px; }
         }
     </style>
 </head>
 
 <body>
+
+<!-- Couple Emoji Animation -->
+<div class="couple">👩🏻‍❤️‍💋‍👨🏻</div>
 
 <audio id="bgMusic" loop>
     <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
@@ -96,15 +140,14 @@
 
 <div id="container">
     <h1>What is your name? ❤️</h1>
-    <input id="nameInput" type="text" placeholder="Enter your name" style="padding:10px; border-radius:8px; border:none;">
+    <input id="nameInput" type="text" placeholder="Enter your name">
     <br><br>
     <button onclick="start()">Continue</button>
 </div>
 
-<footer>© Ann Edakkalathur</footer>
+<footer>© Ann Rose Edakkalathur</footer>
 
 <script>
-    // Start music after click
     function start() {
         document.getElementById("bgMusic").play();
         askLove();
@@ -121,20 +164,32 @@
         setTimeout(() => heart.remove(), 6000);
     }, 300);
 
-    // Floating funny messages
+    // Funny NO button messages
+    const funnyLines = [
+        "Too slow 😝",
+        "Nope, not today!",
+        "Try harder 😆",
+        "I’m allergic to NO!",
+        "You can’t catch mee!",
+        "Nice try, lovebird 💘",
+        "Zoom! 🏃‍♂️💨",
+        "Denied 😜",
+        "You thought 😏",
+        "Faster than your feelings!"
+    ];
+
     function floatMessage(text) {
         const msg = document.createElement("div");
         msg.classList.add("msg");
         msg.innerHTML = text;
         msg.style.left = Math.random() * window.innerWidth + "px";
         msg.style.top = Math.random() * window.innerHeight + "px";
-        msg.style.fontSize = "22px";
-        msg.style.fontWeight = "700";
+        msg.style.fontSize = "24px";
+        msg.style.fontWeight = "600";
         document.body.appendChild(msg);
         setTimeout(() => msg.remove(), 4000);
     }
 
-    // Ask name
     function askLove() {
         const name = document.getElementById("nameInput").value.trim();
         if (!name) {
@@ -151,7 +206,6 @@
 
         const noBtn = document.getElementById("noBtn");
 
-        // Make NO button run away BEFORE click
         noBtn.addEventListener("mouseover", () => {
             const maxX = window.innerWidth - noBtn.offsetWidth;
             const maxY = window.innerHeight - noBtn.offsetHeight;
@@ -159,7 +213,8 @@
             noBtn.style.left = Math.random() * maxX + "px";
             noBtn.style.top = Math.random() * maxY + "px";
 
-            floatMessage("Catch me if you can 😜");
+            const randomLine = funnyLines[Math.floor(Math.random() * funnyLines.length)];
+            floatMessage(randomLine);
         });
     }
 
