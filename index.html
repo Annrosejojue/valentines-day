@@ -126,10 +126,25 @@
             .heart { font-size: 30px !important; }
             .couple { font-size: 55px; bottom: 60px; }
         }
+        #countdownBox {
+
+        position: absolute;
+        top: 20px;
+        width: 100%;
+        text-align: center;
+        color: white;
+        font-size: 2rem;
+        font-weight: 600;
+        z-index: 999;}
+
     </style>
 </head>
 
 <body>
+<div id="countdownBox">
+    <div id="countdown"></div>
+</div>
+
 
 <!-- Couple Emoji Animation -->
 <div class="couple">👩🏻‍❤️‍💋‍👨🏻</div>
@@ -217,6 +232,32 @@
             floatMessage(randomLine);
         });
     }
+    // Valentine’s Day Countdown
+function updateCountdown() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const valentines = new Date(`February 14, ${year} 00:00:00`);
+
+    // If Valentine's Day passed this year, count down to next year
+    if (now > valentines) {
+        valentines.setFullYear(year + 1);
+    }
+
+    const diff = valentines - now;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("countdown").innerHTML =
+        `💘 Valentine's Day in: <br>
+        ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
 
     function yesLove() {
         document.getElementById("container").innerHTML = `
